@@ -8,6 +8,11 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
+# from langchain_openai import ChatOpenAI
+# from openai import OpenAI
+# from langchain_openai import AzureChatOpenAI
+
+
 
 # Load env
 load_dotenv()
@@ -86,7 +91,7 @@ if query:
                 "lambda_mult": 0.5
             }
         )
-
+    
         docs = retriever.invoke(query)
 
         context = "\n\n".join([doc.page_content for doc in docs])
@@ -111,7 +116,10 @@ if query:
         })
 
         # LLM
-        llm = ChatMistralAI(model="mistral-small-2506")
+        # llm = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        
+        
+        llm = ChatMistralAI(model = "mistral-small-2506")
 
         response = llm.invoke(final_prompt)
 
